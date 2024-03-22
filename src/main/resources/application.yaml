@@ -1,0 +1,36 @@
+server:
+  port: 8080
+  
+spring:
+  application:
+    name: Api-Gateway
+  cloud:
+    gateway:
+      routes:
+      - id: User-Api
+        uri: http://localhost:8082
+        predicates:
+        - Path=/v1/user/**
+      - id: Department-Api
+        uri: http://localhost:8081
+        predicates:
+        - Path=/v1/department/**
+      - id: Notification-Api
+        uri: http://localhost:8083
+        predicates:
+        - Path=/v1/notification/**
+
+        
+  security:
+    user:
+      name: admin
+      password: 1234
+ 
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
